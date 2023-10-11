@@ -21,6 +21,7 @@ def execute_query(query: str = None, query_params: dict = None):
             coursor = connection.cursor()
 
             coursor.execute(query, query_params)
+            print("EXECUTING QUERY")
 
             return True
 
@@ -46,7 +47,7 @@ INSER_CAMPAING_QUERY = """
             owner_email,
             from_email,
             to_emails,
-            time_created,
+            time_campaign_created,
             status,
             delivers_count,
             opens_count,
@@ -61,7 +62,7 @@ INSER_CAMPAING_QUERY = """
             )
             VALUES
             (%(campaign_id)s, %(name)s, %(owner_email)s, %(from_email)s, %(to_emails)s,
-            %(time_created)s, %(status)s, %(delivers_count)s, %(opens_count)s,
+            %(time_campaign_created)s, %(status)s, %(delivers_count)s, %(opens_count)s,
             %(replies_count)s, %(bounces_count)s, %(opt_outs_count)s, %(out_of_office_count)s,
             %(people_count)s, %(people_finished)s, %(people_active)s, %(people_paused)s)
 
@@ -74,12 +75,10 @@ INSERT_EMAILS_QUERY = """
     INSERT INTO reply_io_emails
         (
         email,
-        time_created,
         campaign_id
         )
         VALUES
         (%(email)s, 
-        %(time_created)s, 
         %(campaign_id)s)
     ON CONFLICT (email)
     DO NOTHING;
