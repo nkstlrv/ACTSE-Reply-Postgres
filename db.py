@@ -1,3 +1,4 @@
+from pprint import pprint
 import psycopg2
 
 DB_NAME = "postgres"
@@ -7,7 +8,7 @@ DB_HOST = "localhost"
 DB_PORT = 5432
 
 
-def execute_query(query: str = None, query_params: dict = None):
+def execute_query(query: str = None, query_params: dict = None) -> bool | str | None:
     if query is not None:
         try:
             connection = psycopg2.connect(
@@ -23,10 +24,10 @@ def execute_query(query: str = None, query_params: dict = None):
             coursor.execute(query, query_params)
             print("EXECUTING QUERY")
 
+            if "select" in query.lower():
+                response = coursor.fetchall()
+                return response
             return True
-
-            # response = coursor.fetchall()
-            # return response
 
         except psycopg2.Error as e:
             print("Error connecting to the database:", e)
@@ -85,8 +86,8 @@ INSERT_EMAILS_QUERY = """
 
 
 if __name__ == "__main__":
-    print(execute_query("SELECT * FROM reply_io_campaigns"))
-    print(execute_query("SELECT * FROM reply_io_emails"))
+    pprint(execute_query("SELECT * FROM reply_io_campaigns"))
+    pprint(execute_query("SELECT * FROM reply_io_emails"))
 
 
 
