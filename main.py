@@ -61,7 +61,7 @@ def create_emails_payload_for_db(input_payload):
                     "email": email,
                     "campaign_id": item["campaign_id"]
                 }
-            )
+                )
     return result
 
 
@@ -75,6 +75,8 @@ if __name__ == "__main__":
 
     campaigns = create_campaign_payload_for_db(test_payload)
     emails = create_emails_payload_for_db(campaigns)
+
+    pprint(emails)
 
     insert_campaigns_to_db(campaigns)
     insert_emails_to_db(emails)

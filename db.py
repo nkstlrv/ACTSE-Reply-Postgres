@@ -38,7 +38,6 @@ def execute_query(query: str = None, query_params: dict = None):
     return
 
 
-
 INSER_CAMPAING_QUERY = """
         INSERT INTO reply_io_campaigns 
             (
@@ -74,17 +73,35 @@ INSER_CAMPAING_QUERY = """
 INSERT_EMAILS_QUERY = """
     INSERT INTO reply_io_emails
         (
-        email,
-        campaign_id
+            email,
+            campaign_id
         )
-        VALUES
-        (%(email)s, 
-        %(campaign_id)s)
-    ON CONFLICT (email)
-    DO NOTHING;
+    VALUES
+        (
+            %(email)s,
+            %(campaign_id)s
+        )
 """
 
 
 if __name__ == "__main__":
     print(execute_query("SELECT * FROM reply_io_campaigns"))
     print(execute_query("SELECT * FROM reply_io_emails"))
+
+
+
+# INSERT_EMAILS_QUERY = """
+#     INSERT INTO reply_io_emails
+#         (
+#             email,
+#             campaign_id
+#         )
+#     VALUES
+#         (
+#             %(email)s,
+#             %(campaign_id)s
+#         )
+#     ON CONFLICT (email)
+#     DO UPDATE
+#     SET time_db_entry = NOW();
+# """
