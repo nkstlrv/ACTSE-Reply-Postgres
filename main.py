@@ -1,7 +1,7 @@
 import json
 import pretty_errors
 from pprint import pprint
-from db import execute_query, INSER_CAMPAING_QUERY, INSERT_EMAILS_QUERY
+import db
 
 
 def load_test_payload(filepath: str):
@@ -42,7 +42,7 @@ def create_campaign_payload_for_db(input_payload: list | dict):
 
         }
 
-        execute_query(INSER_CAMPAING_QUERY, campaign_insert_payload)
+        db.execute_query(db.INSER_CAMPAING_QUERY, campaign_insert_payload)
 
         # if len(campaign_insert_payload["to_emails"]) > 0:
 
@@ -63,17 +63,21 @@ def create_emails_payload_for_db(input_payload):
     for item in input_payload:
         for email in item["to_emails"]:
             result.append(
-                {email: item["campaign_id"]}
+                {
+                    "email": email,
+                    "campaign_id": item["campaign_id"]
+                }
             )
     return result
+
+def insert_emails_to_db(emails: list):
+    for email in email:
+        db.execute_query(db.INSERT_EMAILS_QUERY, email)
 
 
 
 if __name__ == "__main__":
     test_payload = load_test_payload("reply_input_payload.json")
-    # pprint(test_payload)
-    result = create_campaign_payload_for_db(test_payload)
 
-    # dump_output_payload("repy_result_payload.json", result)
-
-    pprint(create_emails_payload_for_db(result))
+    campaigns = create_campaign_payload_for_db(test_payload)
+    emails = create_emails_payload_for_db(campaigns)
