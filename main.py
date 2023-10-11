@@ -42,15 +42,15 @@ def create_payload_for_db(input_payload: list | dict):
 
         execute_query(INSER_CAMPAING_QUERY, campaign_insert_payload)
 
-        if len(campaign_insert_payload["to_emails"]) > 0:
+        # if len(campaign_insert_payload["to_emails"]) > 0:
 
-            for email in campaign_insert_payload["to_emails"]:
-                emails_insert_payload = {
-                    "email": email,
-                    "time_created": campaign_insert_payload["time_created"],
-                    "campaign_id": campaign_insert_payload["campaign_id"],
-                }
-                execute_query(INSERT_EMAILS_QUERY, emails_insert_payload)
+        #     for email in campaign_insert_payload["to_emails"]:
+        #         emails_insert_payload = {
+        #             "email": email,
+        #             "time_created": campaign_insert_payload["time_created"],
+        #             "campaign_id": campaign_insert_payload["campaign_id"],
+        #         }
+        #         execute_query(INSERT_EMAILS_QUERY, emails_insert_payload)
 
 
         result.append(campaign_insert_payload)
