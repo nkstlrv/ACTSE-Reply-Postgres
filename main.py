@@ -42,19 +42,13 @@ def create_campaign_payload_for_db(input_payload: list | dict):
 
         }
 
-        db.execute_query(db.INSER_CAMPAING_QUERY, campaign_insert_payload)
-
-        # if len(campaign_insert_payload["to_emails"]) > 0:
-
-        #     for email in campaign_insert_payload["to_emails"]:
-        #         emails_insert_payload = {
-        #             "email": email,
-        #             "campaign_id": campaign_insert_payload["campaign_id"],
-        #         }
-        #         execute_query(INSERT_EMAILS_QUERY, emails_insert_payload)
-
         result.append(campaign_insert_payload)
     return result
+
+
+def insert_campaigns_to_db(campaigns: list):
+    for campaign in campaigns:
+        db.execute_query(db.INSER_CAMPAING_QUERY, campaign)
 
 
 def create_emails_payload_for_db(input_payload):
@@ -70,10 +64,10 @@ def create_emails_payload_for_db(input_payload):
             )
     return result
 
-def insert_emails_to_db(emails: list):
-    for email in email:
-        db.execute_query(db.INSERT_EMAILS_QUERY, email)
 
+def insert_emails_to_db(emails: list):
+    for email in emails:
+        db.execute_query(db.INSERT_EMAILS_QUERY, email)
 
 
 if __name__ == "__main__":
@@ -81,3 +75,6 @@ if __name__ == "__main__":
 
     campaigns = create_campaign_payload_for_db(test_payload)
     emails = create_emails_payload_for_db(campaigns)
+
+    insert_campaigns_to_db(campaigns)
+    insert_emails_to_db(emails)
