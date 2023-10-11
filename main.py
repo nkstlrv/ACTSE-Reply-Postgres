@@ -14,6 +14,8 @@ def dump_output_payload(output_filename: str, optput_payload: list | dict):
     with open(output_filename, "w") as f:
         json.dump(optput_payload, f)
     return True
+
+
 def create_payload_for_db(input_payload: list | dict):
 
     result = list()
@@ -52,9 +54,12 @@ def create_payload_for_db(input_payload: list | dict):
         #         }
         #         execute_query(INSERT_EMAILS_QUERY, emails_insert_payload)
 
-
         result.append(campaign_insert_payload)
     return result
+
+
+def prepare_emais_payload(input_payload):
+    ...
 
 
 if __name__ == "__main__":
